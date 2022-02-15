@@ -1,25 +1,11 @@
-<html>
-<title>重写</title>
+<!DOCTYPE html>
+<html lang="en">
 
-<body>
-  <!-- <h1>重写重写重写重写重写重写重写重写重写</h1>
-  <h2>重写</h2>
-  <h3>重写</h3>
-  <h4>重写</h4> -->
-  <div>
-    <textarea id="original"></textarea>
-  </div>
-  <div id="buttonDiv">
-    <button onclick="rewriteHandler(0)">重写</button>
-    <button onclick="rewriteHandler(1)">重写</button>
-    <button onclick="rewriteHandler(2)">重写</button>
-    <button onclick="rewriteHandler(3)">重写</button>
-    <button onclick="rewriteHandler(4)">重写</button>
-    <button class="multiple" onclick="rewriteHandler('multiple')">重写重写重写重写</button>
-  </div>
-  <div>
-    <textarea id="result" disabled="true"></textarea>
-  </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>重写</title>
   <style>
     h1,
     h2,
@@ -39,9 +25,14 @@
       background: black;
     }
 
-    @media (max-width: 700px) {
+    html {
+      font-size: 16px
+    }
+
+    @media screen and (max-width: 768px) {
+
       html {
-        font-size: 25px
+        font-size: 19px
       }
 
       body {
@@ -49,7 +40,15 @@
       }
     }
 
+    :focus {
+      outline: 0;
+      outline-color: transparent;
+      outline-style: none;
+    }
+
     textarea {
+      background-color: transparent;
+      resize: none;
       border-radius: 0px;
       font-size: 1rem;
       box-sizing: border-box;
@@ -62,6 +61,11 @@
       height: calc(50vh - 35px - 0.75rem);
     }
 
+    textarea:active {
+      border-radius: 0px;
+      outline: 0
+    }
+
     #buttonDiv {
       width: 100%;
       margin: 10px auto 10px auto;
@@ -71,7 +75,7 @@
     button.loading {}
 
     button {
-      font-size: 1rem;
+      font-size: 0.9rem;
       margin: 0px;
       height: 1.5rem;
       background: black;
@@ -153,6 +157,31 @@
       return text
     }
   </script>
+</head>
+
+<body>
+
+  <!-- <h1>重写重写重写重写重写重写重写重写重写</h1>
+  <h2>重写</h2>
+  <h3>重写</h3>
+  <h4>重写</h4> -->
+  <div>
+    <textarea id="original"></textarea>
+  </div>
+  <div id="buttonDiv">
+    <button onclick="rewriteHandler(0)">重写</button>
+    <button onclick="rewriteHandler(1)">重写</button>
+    <button onclick="rewriteHandler(2)">重写</button>
+    <button onclick="rewriteHandler(3)">重写</button>
+    <button onclick="rewriteHandler(4)">重写</button>
+    <button class="multiple" onclick="rewriteHandler('multiple')">重重写</button>
+  </div>
+  <div>
+    <textarea id="result" disabled="true"></textarea>
+  </div>
+
+
+
 </body>
 
 </html>

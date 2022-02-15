@@ -105,9 +105,9 @@
     }
   </style>
   <script>
-    let lastChoice = 0
+    let lastChoice = 2
     let text = "哈哈哈";
-    const LANGUAGES = ["ru", "ja", "es", "fr", "en"]
+    const LANGUAGES = ["en", "ja", "ru", "fr", "es"]
     console.log(navigator.clipboard);
 
     async function rewriteHandler(type) {
@@ -125,7 +125,7 @@
         } else {
           if (type == "recursive") {
             text = await rewrite(text, LANGUAGES[lastChoice])
-            text = await rewrite(text, LANGUAGES[lastChoice])
+            text = await rewrite(text, LANGUAGES[0])
           } else {
             lastChoice = type
             text = await rewrite(text, LANGUAGES[type])

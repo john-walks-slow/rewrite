@@ -99,20 +99,22 @@
     }
 
     button:active {
-      background: grey;
+      box-shadow: inset 0 0 20px rgba(197, 197, 197, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+      outline-color: rgba(218, 218, 218, 0.5);
+      text-shadow: 1px 1px 2px #8cc6df;
     }
   </style>
   <script>
     let lastChoice = 0
     let text = "哈哈哈";
     const LANGUAGES = ["ru", "ja", "es", "fr", "en"]
-    console.log();
+    console.log(navigator.clipboard);
 
     async function rewriteHandler(type) {
       try {
         let text = document.getElementById("original").value
         if (text == "") {
-          text = navigator.clipboard.readText()
+          text = await navigator.clipboard.readText()
           document.getElementById("original").value = text
         }
         document.getElementById("result").value = "重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中"
@@ -129,8 +131,8 @@
             text = await rewrite(text, LANGUAGES[type])
           }
         }
-        navigator.clipboard.writeText(text);
         document.getElementById("result").value = text
+        await navigator.clipboard.writeText(text);
       } catch (e) {
         console.log(e);
       }

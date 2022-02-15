@@ -1,0 +1,145 @@
+<html>
+
+<body>
+  <!-- <h1>重写重写重写重写重写重写重写重写重写</h1>
+  <h2>重写</h2>
+  <h3>重写</h3>
+  <h4>重写</h4> -->
+  <div>
+    <textarea id="original" cols="30" rows="10"></textarea>
+  </div>
+  <div id="buttonDiv">
+    <button onclick="rewriteHandler(0)">重写</button>
+    <button onclick="rewriteHandler(1)">重写</button>
+    <button onclick="rewriteHandler(2)">重写</button>
+    <button onclick="rewriteHandler(3)">重写</button>
+    <button onclick="rewriteHandler(4)">重写</button>
+    <button class="multiple" onclick="rewriteHandler('multiple')">重写重写重写重写</button>
+  </div>
+  <div>
+    <textarea id="result" cols="30" rows="10"></textarea>
+  </div>
+  <style>
+    h1,
+    h2,
+    h3,
+    h4 {
+      position: fixed;
+      left: 45vw;
+
+      top: 45vh;
+      color: white;
+    }
+
+    body {
+      padding: 10px;
+      margin: 0px;
+      background: black;
+    }
+
+    textarea {
+
+      font-size: 1.2em;
+      box-sizing: border-box;
+      width: 80vw;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      background: black;
+      color: white;
+      height: calc(50vh - 45px);
+    }
+
+    #buttonDiv {
+      width: 79.9vw;
+      margin: 10px auto 10px auto;
+
+    }
+
+    button.loading {}
+
+    button {
+      margin: 0px;
+      height: 30px;
+      background: black;
+
+      color: white;
+      border: none;
+
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+      outline: 1px solid;
+      outline-color: rgba(255, 255, 255, 0.5);
+      text-shadow: none;
+      transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    button.multiple {}
+
+    button:hover {
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+      outline-color: rgba(255, 255, 255, 0.5);
+      text-shadow: 1px 1px 2px #427388;
+    }
+
+    button:active {
+      background: grey;
+    }
+  </style>
+  <script>
+    let text = "哈哈哈";
+    const LANGUAGES = ["ru", "ja", "es", "fr", "en"]
+    console.log();
+
+    async function rewriteHandler(type) {
+      try {
+        let text = document.getElementById("original").value
+        document.getElementById("result").value = "重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中"
+        if (type == "multiple") {
+          let languages = LANGUAGES.filter(() => Math.random() < 0.45)
+          console.log(languages);
+          text = await rewriteMultiple(text, languages)
+        } else {
+          text = await rewrite(text, LANGUAGES[type])
+        }
+        document.getElementById("result").value = text
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    async function rewrite(text, language) {
+      text = await fetch('http://api.interpreter.caiyunai.com/v1/translator', {
+        method: 'POST',
+        headers: {
+          'x-authorization': 'token 1462oc2ngo6mbmfr4f1p',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          "source": text,
+          "trans_type": `zh2${language}`,
+          "request_id": "demo"
+        })
+      }).then(r => r.json()).then(r => r.target)
+      text = await fetch('http://api.interpreter.caiyunai.com/v1/translator', {
+        method: 'POST',
+        headers: {
+          'x-authorization': 'token 1462oc2ngo6mbmfr4f1p',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          "source": text,
+          "trans_type": `${language}2zh`,
+          "request_id": "demo"
+        })
+      }).then(r => r.json()).then(r => r.target)
+      return text
+    }
+    async function rewriteMultiple(text, languages) {
+      for (let language of languages) {
+        text = await rewrite(text, language)
+      }
+      return text
+    }
+  </script>
+</body>
+
+</html>

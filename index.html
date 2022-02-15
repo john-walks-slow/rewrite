@@ -17,7 +17,7 @@
     <button class="multiple" onclick="rewriteHandler('multiple')">重写重写重写重写</button>
   </div>
   <div>
-    <textarea id="result" cols="30" rows="10"></textarea>
+    <textarea id="result" disabled="true" cols="30" rows="10"></textarea>
   </div>
   <style>
     h1,
@@ -32,14 +32,15 @@
     }
 
     body {
+      font-size: 1.6vh;
       padding: 10px;
       margin: 0px;
       background: black;
     }
 
     textarea {
-
-      font-size: 1.2em;
+      border-radius: 0px;
+      font-size: 1em;
       box-sizing: border-box;
       width: 80vw;
       margin: 10px auto;
@@ -47,7 +48,7 @@
       padding: 10px;
       background: black;
       color: white;
-      height: calc(50vh - 45px);
+      height: calc(50vh - 35px - 0.75em);
     }
 
     #buttonDiv {
@@ -59,8 +60,9 @@
     button.loading {}
 
     button {
+      font-size: 1em;
       margin: 0px;
-      height: 30px;
+      height: 1.5em;
       background: black;
 
       color: white;

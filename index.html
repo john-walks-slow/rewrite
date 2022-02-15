@@ -111,6 +111,10 @@
     async function rewriteHandler(type) {
       try {
         let text = document.getElementById("original").value
+        if (text == "") {
+          text = navigator.clipboard.readText()
+          document.getElementById("original").value = text
+        }
         document.getElementById("result").value = "重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中"
         if (type == "multiple") {
           let languages = LANGUAGES.filter(() => Math.random() < 0.45)
@@ -125,6 +129,7 @@
             text = await rewrite(text, LANGUAGES[type])
           }
         }
+        navigator.clipboard.writeText(text);
         document.getElementById("result").value = text
       } catch (e) {
         console.log(e);

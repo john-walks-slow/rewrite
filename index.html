@@ -125,7 +125,7 @@
         } else {
           if (type == "recursive") {
             text = await rewrite(text, LANGUAGES[lastChoice])
-            text = await rewrite(text, LANGUAGES[0])
+            text = await rewrite(text, LANGUAGES[lastChoice])
           } else {
             lastChoice = type
             text = await rewrite(text, LANGUAGES[type])
@@ -188,8 +188,8 @@
     <button onclick="rewriteHandler(2)">重写</button>
     <button onclick="rewriteHandler(3)">重写</button>
     <button onclick="rewriteHandler(4)">重写</button>
-    <button class="multiple" onclick="rewriteHandler('multiple')">重重写</button>
-    <button class="recursive" onclick="rewriteHandler('recursive')">重写重写</button>
+    <button class="recursive" onclick="rewriteHandler('recursive')">重重写</button>
+    <button class="multiple" onclick="rewriteHandler('multiple')">重写重写</button>
   </div>
   <div>
     <textarea id="result" disabled="true"></textarea>

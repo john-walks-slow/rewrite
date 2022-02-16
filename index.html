@@ -114,8 +114,16 @@
       try {
         let text = document.getElementById("original").value
         if (text == "") {
-          text = await navigator.clipboard.readText()
-          document.getElementById("original").value = text
+          return
+          // text = await navigator.clipboard.readText()
+          // document.getElementById("original").value = text
+        }
+        if (type == "recursive") {
+          if (document.getElementById("result").value.length > 0) {
+            document.getElementById("original").value = document.getElementById("result").value
+            document.getElementById("result").value = ""
+          }
+          return
         }
         document.getElementById("result").value = "重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中"
         if (type == "multiple") {
@@ -123,18 +131,13 @@
           console.log(languages);
           text = await rewriteMultiple(text, languages)
         } else {
-          if (type == "recursive") {
-            text = await rewrite(text, LANGUAGES[lastChoice])
-            text = await rewrite(text, 'en')
-          } else {
-            lastChoice = type
-            text = await rewrite(text, LANGUAGES[type])
-          }
+          lastChoice = type
+          text = await rewrite(text, LANGUAGES[type])
         }
         document.getElementById("result").value = text
-        await navigator.clipboard.writeText(text);
+        // await navigator.clipboard.writeText(text);
       } catch (e) {
-        console.log(e);
+        document.getElementById("result").value = e
       }
     }
     async function rewrite(text, language) {
@@ -188,8 +191,8 @@
     <button onclick="rewriteHandler(2)">重写</button>
     <button onclick="rewriteHandler(3)">重写</button>
     <button onclick="rewriteHandler(4)">重写</button>
-    <button class="recursive" onclick="rewriteHandler('recursive')">重重写</button>
-    <button class="multiple" onclick="rewriteHandler('multiple')">重写重写</button>
+    <button class="multiple" onclick="rewriteHandler('multiple')">重重写</button>
+    <button class="recursive" onclick="rewriteHandler('recursive')">重写重写</button>
   </div>
   <div>
     <textarea id="result" disabled="true"></textarea>

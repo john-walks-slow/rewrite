@@ -105,14 +105,32 @@
     }
   </style>
   <script>
+    function shuffle(array) {
+      let currentIndex = array.length,
+        randomIndex;
+
+      // While there remain elements to shuffle...
+      while (currentIndex != 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex], array[currentIndex]
+        ];
+      }
+
+      return array;
+    }
     let lastChoice = 2
     let text = "哈哈哈";
     const LANGUAGES = ["en", "ja", "ru", "fr", "es"]
-    console.log(navigator.clipboard);
 
     async function rewriteHandler(type) {
       try {
-        let text = document.getElementById("original").value
+        let text = document.getElementById("original").value.split('\n')
         if (text == "") {
           return
           // text = await navigator.clipboard.readText()
@@ -127,20 +145,25 @@
         }
         document.getElementById("result").value = "重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中重写中"
         if (type == "multiple") {
-          let languages = LANGUAGES.filter(() => Math.random() < 0.45).sort(() => .5 - Math.random())
-          console.log(languages);
+          let languages = []
+          while (languages.length == 0) {
+            languages = LANGUAGES.filter(() => Math.random() < 0.5)
+          }
+          languages = shuffle(languages)
           text = await rewriteMultiple(text, languages)
         } else {
           lastChoice = type
           text = await rewrite(text, LANGUAGES[type])
         }
-        document.getElementById("result").value = text
+        console.log(text)
+        document.getElementById("result").value = text.reduce((a, t) => (a + t + "\n"), "").split(-1)
         // await navigator.clipboard.writeText(text);
       } catch (e) {
         document.getElementById("result").value = e
       }
     }
     async function rewrite(text, language) {
+      console.log(language);
       text = await fetch('https://api.interpreter.caiyunai.com/v1/translator', {
         method: 'POST',
         headers: {
